@@ -80,7 +80,7 @@ else {
                     <th><?php _e( 'Share Username', 'cc-lti' ); ?></th>
                     <td>
                         <input type="checkbox" name="cc-share-username" <?php checked( $tool[ 'share_username' ], true, true ); ?>>
-                    </td>                                
+                    </td>
                 </tr>
                 <tr>
                     <th><?php _e( 'Share Email Address', 'cc-lti' ); ?></th>
@@ -89,7 +89,7 @@ else {
                     </td>
                 </tr>
             </table>
-            <input type="submit" class="button button-primary" value="<?php _e( 'Add Tool', 'cc-lti' ); ?>">
+            <input type="submit" class="button button-primary" value="<?php isset($_GET['add']) ? _e( 'Add Tool', 'cc-lti' ) : _e( 'Save Tool', 'cc-lti' ); ?>">
             <input type="hidden" name="action" value="add_tool">
             <input type="hidden" name="cc-id" value="<?php echo esc_attr( $tool[ 'id' ] ); ?>">
         </form>

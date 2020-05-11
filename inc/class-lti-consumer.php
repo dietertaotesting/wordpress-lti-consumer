@@ -52,7 +52,7 @@ class LTI_Consumer {
 
     private static function admin_menus() {
         add_menu_page( __( 'LTI Consumer', 'cc-lti' ), __( 'LTI Consumer', 'cc-lti' ), 'manage_options', 'cc-lti', function() {
-            
+
         }, '', 99 );
 
         add_submenu_page( 'cc-lti', __( 'LTI Consumer Tools', 'cc-lti' ), __( 'LTI Tools', 'cc-lti' ), 'manage_options', 'cc-lti', function() {
@@ -65,8 +65,8 @@ class LTI_Consumer {
     }
 
     /**
-     * Outputs the HTML for the admin page where all of the existing 
-     * LTI tools are listed and links to create new tools. 
+     * Outputs the HTML for the admin page where all of the existing
+     * LTI tools are listed and links to create new tools.
      */
     private static function admin_lti_tools() {
         if ( isset( $_GET[ 'add' ] ) ) {
@@ -98,7 +98,7 @@ class LTI_Consumer {
 
     /**
      * Gets a setting for the plugin, storing it in a static if needed for later
-     * 
+     *
      * @param type $setting_name
      * @param type $default
      * @param boolean $force_refresh
@@ -128,7 +128,7 @@ class LTI_Consumer {
 
         if ( empty( $_POST[ 'cc-tool-name' ] ) || empty( $_POST[ 'cc-base-url' ] ) ) {
             if ( !empty( $_POST[ 'cc-id' ] ) ) {
-                
+
             }
             else {
                 wp_redirect( admin_url( 'admin.php?page=cc-lti&add&req' ) );
@@ -156,10 +156,10 @@ class LTI_Consumer {
 
     /**
      * Adds a new tool to the options table.
-     * 
+     *
      * This doesn't do any validation that the information passed is valid.
      * That should be taken care of before calling this method.
-     * 
+     *
      * @param type $tool_info
      */
     public static function add_tool( $tool_info = [] ) {
@@ -194,10 +194,10 @@ class LTI_Consumer {
 
     /**
      * Retrieves information on a tool based on a url.
-     * 
+     *
      * This looks for the base url field that is found at the beginning
-     * of the url value passed. 
-     * 
+     * of the url value passed.
+     *
      * @param type $url
      */
     private static function find_tool( $url ) {
@@ -358,11 +358,11 @@ class LTI_Consumer {
 
         return $signature;
 
-        $key_parts = urlencodeRFC3986( $secret );
-//$key = implode('&', $key_parts);
-        $key = $key_parts . '&';
-        $base_string = 'GET&' . urlencodeRFC3986( $url ) . '&' . urlencodeRFC3986( $post_string );
-        $signature = base64_encode( hash_hmac( 'sha1', $base_string, $key, true ) );
+//        $key_parts = urlencodeRFC3986( $secret );
+////$key = implode('&', $key_parts);
+//        $key = $key_parts . '&';
+//        $base_string = 'GET&' . urlencodeRFC3986( $url ) . '&' . urlencodeRFC3986( $post_string );
+//        $signature = base64_encode( hash_hmac( 'sha1', $base_string, $key, true ) );
     }
 
     private static function urlencodeRFC3986( $string ) { /* {{{ */

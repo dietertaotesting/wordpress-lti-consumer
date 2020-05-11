@@ -1,9 +1,9 @@
 <?php
 
-/* Not mine, but just in case there's another plugin using a 
- * different version of this class. 
+/* Not mine, but just in case there's another plugin using a
+ * different version of this class.
  */
-namespace ClassCube; 
+namespace ClassCube;
 
 /* Generic exception class
  */
@@ -116,9 +116,9 @@ abstract class OAuthSignatureMethod {
 }
 
 /**
- * The HMAC-SHA1 signature method uses the HMAC-SHA1 signature algorithm as defined in [RFC2104] 
- * where the Signature Base String is the text and the key is the concatenated values (each first 
- * encoded per Parameter Encoding) of the Consumer Secret and Token Secret, separated by an '&' 
+ * The HMAC-SHA1 signature method uses the HMAC-SHA1 signature algorithm as defined in [RFC2104]
+ * where the Signature Base String is the text and the key is the concatenated values (each first
+ * encoded per Parameter Encoding) of the Consumer Secret and Token Secret, separated by an '&'
  * character (ASCII code 38) even if empty.
  *   - Chapter 9.2 ("HMAC-SHA1")
  */
@@ -146,7 +146,7 @@ class OAuthSignatureMethod_HMAC_SHA1 extends OAuthSignatureMethod {
 }
 
 /**
- * The PLAINTEXT method does not provide any security protection and SHOULD only be used 
+ * The PLAINTEXT method does not provide any security protection and SHOULD only be used
  * over a secure channel such as HTTPS. It does not use the Signature Base String.
  *   - Chapter 9.4 ("PLAINTEXT")
  */
@@ -157,8 +157,8 @@ class OAuthSignatureMethod_PLAINTEXT extends OAuthSignatureMethod {
     }
 
     /**
-     * oauth_signature is set to the concatenated encoded values of the Consumer Secret and 
-     * Token Secret, separated by a '&' character (ASCII code 38), even if either secret is 
+     * oauth_signature is set to the concatenated encoded values of the Consumer Secret and
+     * Token Secret, separated by a '&' character (ASCII code 38), even if either secret is
      * empty. The result MUST be encoded again.
      *   - Chapter 9.4.1 ("Generating Signatures")
      *
@@ -181,10 +181,10 @@ class OAuthSignatureMethod_PLAINTEXT extends OAuthSignatureMethod {
 }
 
 /**
- * The RSA-SHA1 signature method uses the RSASSA-PKCS1-v1_5 signature algorithm as defined in 
- * [RFC3447] section 8.2 (more simply known as PKCS#1), using SHA-1 as the hash function for 
- * EMSA-PKCS1-v1_5. It is assumed that the Consumer has provided its RSA public key in a 
- * verified way to the Service Provider, in a manner which is beyond the scope of this 
+ * The RSA-SHA1 signature method uses the RSASSA-PKCS1-v1_5 signature algorithm as defined in
+ * [RFC3447] section 8.2 (more simply known as PKCS#1), using SHA-1 as the hash function for
+ * EMSA-PKCS1-v1_5. It is assumed that the Consumer has provided its RSA public key in a
+ * verified way to the Service Provider, in a manner which is beyond the scope of this
  * specification.
  *   - Chapter 9.3 ("RSA-SHA1")
  */
@@ -382,7 +382,7 @@ class OAuthRequest {
      *
      * The base string defined as the method, the url
      * and the parameters (normalized), each urlencoded
-     * and the concated with &.
+     * and then concatenated with &.
      */
     public function get_signature_base_string() {
         $parts = array(
@@ -397,7 +397,7 @@ class OAuthRequest {
     }
 
     /**
-     * just uppercases the http method
+     * just upper-cases the http method
      */
     public function get_normalized_http_method() {
         return strtoupper( $this->http_method );
@@ -567,7 +567,7 @@ class OAuthServer {
     /**
      * verify an api call, checks all the parameters
      */
-    public function verify_request( &$request ) { 
+    public function verify_request( &$request ) {
         $this->get_version( $request );
         $consumer = $this->get_consumer( $request );
         $token = $this->get_token( $request, $consumer, "access" );
@@ -584,7 +584,7 @@ class OAuthServer {
     private function get_version( &$request ) {
         $version = $request->get_parameter( "oauth_version" );
         if ( !$version ) {
-            // Service Providers MUST assume the protocol version to be 1.0 if this parameter is not present. 
+            // Service Providers MUST assume the protocol version to be 1.0 if this parameter is not present.
             // Chapter 7.0 ("Accessing Protected Ressources")
             $version = '1.0';
         }
@@ -686,7 +686,7 @@ class OAuthServer {
         $now = time();
         if ( abs( $now - $timestamp ) > $this->timestamp_threshold ) {
             throw new OAuthException(
-            "Expired timestamp. Yours: " . date('r', $timestamp) . ', ours: ' . date('r', $now)      
+            "Expired timestamp. Yours: " . date('r', $timestamp) . ', ours: ' . date('r', $now)
             //"Expired timestamp, yours $timestamp, ours $now"
             );
         }
@@ -897,7 +897,7 @@ class OAuthUtil {
 
 /**
  * A Trivial memory-based store - no support for tokens.
- * 
+ *
  * Pulled from Moodle code base
  */
 class TrivialOAuthDataStore extends OAuthDataStore {
@@ -920,7 +920,7 @@ class TrivialOAuthDataStore extends OAuthDataStore {
      *
      * @param string $consumerkey     Consumer key
      *
-     * @return \OAuthConsumer  OAuthConsumer object
+     * @return OAuthConsumer  OAuthConsumer object
      */
     public function lookup_consumer( $consumerkey ) {
         if ( strpos( $consumerkey, "http://" ) === 0 ) {
@@ -937,11 +937,11 @@ class TrivialOAuthDataStore extends OAuthDataStore {
     /**
      * Create a dummy OAuthToken object for a consumer
      *
-     * @param \OAuthConsumer $consumer     Consumer
+     * @param OAuthConsumer $consumer     Consumer
      * @param string $tokentype    Type of token
      * @param string $token        Token ID
      *
-     * @return \OAuthToken OAuthToken object
+     * @return OAuthToken OAuthToken object
      */
     public function lookup_token( $consumer, $tokentype, $token ) {
         return new OAuthToken( $consumer, '' );
@@ -950,7 +950,7 @@ class TrivialOAuthDataStore extends OAuthDataStore {
     /**
      * Nonce values are not checked so just return a null
      *
-     * @param \OAuthConsumer $consumer     Consumer
+     * @param OAuthConsumer $consumer     Consumer
      * @param string $token        Token ID
      * @param string $nonce        Nonce value
      * @param string $timestamp    Timestamp
@@ -967,11 +967,11 @@ class TrivialOAuthDataStore extends OAuthDataStore {
     /**
      * Tokens are not used so just return a null.
      *
-     * @param \OAuthConsumer $consumer     Consumer
+     * @param OAuthConsumer $consumer     Consumer
      *
      * @return null
      */
-    public function new_request_token( $consumer ) {
+    public function new_request_token( $consumer, $callback = null ) {
         return null;
     }
 
@@ -979,11 +979,11 @@ class TrivialOAuthDataStore extends OAuthDataStore {
      * Tokens are not used so just return a null.
      *
      * @param string $token        Token ID
-     * @param \OAuthConsumer $consumer     Consumer
+     * @param OAuthConsumer $consumer     Consumer
      *
      * @return null
      */
-    public function new_access_token( $token, $consumer ) {
+    public function new_access_token( $token, $consumer, $verifier = null ) {
         return null;
     }
 
